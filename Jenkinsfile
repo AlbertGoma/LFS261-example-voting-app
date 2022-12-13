@@ -254,12 +254,12 @@ pipeline {
     		branch 'master'
     	}
       environment{
-        def GIT_COMMIT = "${env.GIT_COMMIT}"
+        def BUILD_ID = "v${env.BUILD_ID}"
       }
       steps{
-        echo "${GIT_COMMIT}"
+        echo "${BUILD_ID}"
         echo "triggering deployment"
-        build job: 'deployment', parameters: [string(name: 'DOCKERTAG', value: GIT_COMMIT)]
+        build job: 'deployment', parameters: [string(name: 'DOCKERTAG', value: BUILD_ID)]
       }
     }
     
