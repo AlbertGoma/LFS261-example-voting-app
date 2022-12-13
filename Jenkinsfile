@@ -222,19 +222,19 @@ pipeline {
       }
     }
 
-    stage("Quality Gate") {
-    	agent any
-    	when{
-        branch 'master'
-      }
-      steps {
-        timeout(time: 3, unit: 'MINUTES') {
-          // Parameter indicates whether to set pipeline to UNSTABLE if Quality Gate fails
-          // true = set pipeline to UNSTABLE, false = don't
-        	waitForQualityGate abortPipeline: true
-        }
-      }
-    }
+//    stage("Quality Gate") {
+//    	agent any
+//   	when{
+//        branch 'master'
+//      }
+//      steps {
+//        timeout(time: 3, unit: 'MINUTES') {
+//          // Parameter indicates whether to set pipeline to UNSTABLE if Quality Gate fails
+//          // true = set pipeline to UNSTABLE, false = don't
+//        	waitForQualityGate abortPipeline: true
+//        }
+//      }
+//    }
     
     
     stage('deploy-to-dev'){
@@ -250,6 +250,9 @@ pipeline {
     
     stage('Trigger deployment'){
       agent any
+    	when{
+    		branch 'master'
+    	}
       environment{
         def GIT_COMMIT = "${env.GIT_COMMIT}"
       }
